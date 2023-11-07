@@ -10,11 +10,12 @@ urls = deque([user_url])
 scrapped_urls = set() 
 emails = set() 
 count = 0
+limit = int(input('[+] Enter the depth limit: '))
 
 try:
         while True:
                 count += 1
-                if count > 10:
+                if count > limit:
                         break 
                                  
                 url = urls.popleft()
@@ -26,7 +27,7 @@ try:
                 print(f'[{count}] Processing: {url}')
 
                 try:
-                        response = requests.get(url)                       
+                        response = requests.get(url, verify=False) # Set verify to False to ignore SSL errors                 
                 except (requests.exceptions.MissingSchema, requests.exceptions.ConnectionError):
                         continue
 

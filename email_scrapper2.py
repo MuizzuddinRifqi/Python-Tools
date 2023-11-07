@@ -2,7 +2,6 @@ from collections import deque
 import re
 import requests
 import urllib.parse
-
 from bs4 import BeautifulSoup
 
 user_url = input('[+] Enter the URL: ')
@@ -10,20 +9,22 @@ urls = deque([user_url])
 scrapped_urls = set()
 emails = set()
 count = 0
+limit = int(input('[+] Enter the depth limit: '))
 
 # Set a custom user-agent to mimic a web browser
 headers = {'User-Agent': 'YourUserAgent'}
 
 try:
-    while urls and count < 10:  # Allow processing while there are URLs and within a depth limit
+    while urls and count < limit:  # Allow processing while there are URLs and within a depth limit
         count += 1
         url = urls.popleft()
         scrapped_urls.add(url)
 
         print(f'[{count}] Processing: {url}')
+        
 
         try:
-            response = requests.get(url, headers=headers)
+            response = requests.get(url, headers=headers, verify=True) # Set verify to False to ignore SSL errors
             response.raise_for_status()  # Check for HTTP request errors
         except (requests.exceptions.RequestException, requests.exceptions.ConnectionError) as e:
             print(f"Request error for {url}: {e}")

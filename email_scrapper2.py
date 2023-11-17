@@ -33,7 +33,7 @@ try:
         # Use BeautifulSoup to parse the HTML
         soup = BeautifulSoup(response.text, 'html.parser')
 
-        # Find and collect email addresses
+        # Find and collect email addresses from pattern matches
         new_emails = set(re.findall(r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,7}\b', response.text))
         emails.update(new_emails)
 

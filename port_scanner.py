@@ -15,5 +15,13 @@ if ',' in ports:
     portlist = ports.split(',')
     for port in portlist:
         scan_port(target, int(port))
+
+elif '-' in ports:
+    portRange = ports.split('-')
+    start = int(portRange[0])
+    end = int(portRange[1])
+    for port in range(start, end + 1):
+        scan_port(target, port)
+
 else:
     scan_port(target, int(ports))
